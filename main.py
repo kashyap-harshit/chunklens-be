@@ -1,9 +1,9 @@
 from fastapi import FastAPI
-from app.models.request_models import ParseRequest
-from app.utils.fetch_html import fetch_html
-from app.utils.parse_clean import parse_and_clean
-from app.utils.tokenizer import tokenize_text
-from app.utils.chunker import chunk_tokens
+from models.request_models import ParseRequest
+from utils.fetch_html import fetch_html
+from utils.parse_clean import parse_and_clean
+from utils.tokenizer import tokenize_text
+from utils.chunker import chunk_tokens
 
 
 app = FastAPI()

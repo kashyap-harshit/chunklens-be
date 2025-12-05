@@ -7,6 +7,3 @@ def fetch_html(url: str) -> str:
     return response.text
 
 
-
-a = fetch_html("https://www.instagram.com")
-print(a)

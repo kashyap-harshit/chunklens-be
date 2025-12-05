@@ -1,4 +1,4 @@
 from pydantic import BaseModel
 
-class parseRequest(BaseModel):
+class ParseRequest(BaseModel):
     url:str
