@@ -8,7 +8,6 @@ from app.config import settings
 
 router = APIRouter()
 
-# Initialize services (vector_db will be lazy-loaded)
 html_fetcher = HTMLFetcher()
 text_processor = TextProcessor()
 embedding_service = EmbeddingService()
@@ -16,52 +15,35 @@ vector_db = VectorDBService()
 
 @router.post("/search", response_model=SearchResponse)
 async def search_website(request: SearchRequest):
-    """
-    Main endpoint to search website content
-    1. Fetch and parse HTML
-    2. Chunk the content
-    3. Generate embeddings
-    4. Store in vector DB
-    5. Search with query
-    6. Return top 10 results
-    """
+
     try:
-        # Step 1: Fetch and parse HTML
         soup, path = html_fetcher.fetch_and_parse(request.url)
         
-        # Step 2: Extract text blocks
         text_blocks = html_fetcher.extract_text_with_structure(soup)
         
         if not text_blocks:
             raise HTTPException(status_code=400, detail="No content found on the webpage")
         
-        # Step 3: Chunk the content
         chunks = text_processor.chunk_text(text_blocks)
         
         if not chunks:
             raise HTTPException(status_code=400, detail="Failed to create chunks from content")
         
-        # Step 4: Prepare chunks for indexing
         indexed_chunks = text_processor.prepare_chunks_for_indexing(chunks, request.url, path)
         
-        # Step 5: Generate embeddings for all chunks
         chunk_texts = [chunk['text'] for chunk in indexed_chunks]
         embeddings = embedding_service.generate_embeddings_batch(chunk_texts)
         
-        # Step 6: Store in vector database
         vector_db.upsert_chunks(indexed_chunks, embeddings)
         
-        # Step 7: Generate embedding for the search query
         query_embedding = embedding_service.generate_embedding(request.query)
         
-        # Step 8: Search in vector database
         search_results = vector_db.search(
             query_embedding=query_embedding,
             top_k=settings.TOP_K_RESULTS,
-            filter_dict={'url': request.url}  # Only search within this URL's content
+            filter_dict={'url': request.url}  
         )
         
-        # Step 9: Format results
         formatted_results = []
         for result in search_results:
             metadata = result['metadata']
@@ -89,9 +71,7 @@ async def search_website(request: SearchRequest):
 
 @router.get("/health")
 async def health_check():
-    """
-    Health check endpoint
-    """
+
     try:
         if not vector_db._initialized:
             return {
@@ -101,7 +81,6 @@ async def health_check():
         
         stats = vector_db.get_stats()
         
-        # Extract only serializable data
         total_count = 0
         namespace_info = {}
         
