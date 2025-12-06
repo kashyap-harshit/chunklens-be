@@ -2,7 +2,7 @@
 
 A FastAPI-based semantic search engine that fetches, chunks, and searches website content using vector embeddings and Pinecone.
 
-## 🚀 Features
+## Features
 
 - **Smart Web Scraping**: Fetches and cleans HTML content from any URL
 - **Intelligent Chunking**: Splits content into 500-token chunks for optimal processing
@@ -10,7 +10,7 @@ A FastAPI-based semantic search engine that fetches, chunks, and searches websit
 - **Vector Database**: Leverages Pinecone for lightning-fast similarity search
 - **Top 10 Results**: Returns the most relevant content chunks ranked by similarity score
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **FastAPI**: Modern, fast web framework
 - **Pinecone**: Cloud vector database
@@ -18,7 +18,7 @@ A FastAPI-based semantic search engine that fetches, chunks, and searches websit
 - **BeautifulSoup**: HTML parsing and cleaning
 - **Tiktoken**: Token counting and management
 
-## 📦 Installation
+## Installation
 
 ### Prerequisites
 
@@ -111,7 +111,7 @@ Content-Type: application/json
 GET /api/health
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 chunklens-be/
@@ -133,7 +133,7 @@ chunklens-be/
 └── README.md
 ```
 
-## 🧠 How It Works
+## How It Works
 
 1. **Fetch**: Downloads HTML from the provided URL
 2. **Clean**: Removes scripts, styles, and non-content elements
@@ -143,7 +143,7 @@ chunklens-be/
 6. **Search**: Finds semantically similar chunks to the query
 7. **Rank**: Returns top 10 results by similarity score
 
-## 🔍 Example Usage
+## Example Usage
 
 ```python
 import requests
@@ -163,7 +163,7 @@ for result in results['results'][:3]:
     print("---")
 ```
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Pinecone Connection Issues
 
@@ -184,7 +184,7 @@ for result in results['results'][:3]:
 uvicorn app.main:app --port 8001
 ```
 
-## 📝 Environment Variables
+## Environment Variables
 
 | Variable               | Description           | Default        |
 | ---------------------- | --------------------- | -------------- |
@@ -194,7 +194,7 @@ uvicorn app.main:app --port 8001
 | `MAX_TOKENS_PER_CHUNK` | Max tokens per chunk  | `500`          |
 | `TOP_K_RESULTS`        | Number of results     | `10`           |
 
-## 🔗 Links
+## Links
 
 - [FastAPI Documentation](https://fastapi.tiangolo.com/)
 - [Pinecone Documentation](https://docs.pinecone.io/)
