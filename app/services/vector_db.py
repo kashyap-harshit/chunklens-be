@@ -22,10 +22,10 @@ class VectorDBService:
 
             self.index = self.pc.Index(self.index_name)
             self._initialized = True
-            print(f"✓ Connected to Pinecone index: {self.index_name}")
+            print(f"Connected to Pinecone index: {self.index_name}")
 
         except Exception as e:
-            print(f"✗ Error connecting to Pinecone: {str(e)}")
+            print(f"Error connecting to Pinecone: {str(e)}")
             raise Exception(f"Error initializing Pinecone index: {str(e)}")
 
     def upsert_chunks(self, chunks: List[Dict], embeddings: List[List[float]]):
